@@ -20,7 +20,7 @@ if __name__ == '__main__':
         Book.query.delete()
 
         print("Creating Books...")
-        book = Book(title = "A title")
+        book = Book(title = "Wonderful Book Title")
         db.session.add(book)
         db.session.commit()
 
