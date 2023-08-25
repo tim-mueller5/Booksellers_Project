@@ -1,0 +1,6 @@
+.header-content{
+    min-height: 75vh;
+    background: linear-gradient(rgba(39, 73, 174, 0.3),
+    rgba(39, 73, 174, 0.5)), url(/home/ralph/Development/code/phase-4/Booksellers_Project/client/src/components/Images/416197-anime-girls-schoolgirl-library-original-characters.jpg) 
+    center/cover no-repeat;
+}
