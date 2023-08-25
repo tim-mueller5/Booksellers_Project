@@ -15,8 +15,6 @@ function App() {
     })
   }, [])
 
-  console.log("Test")
-
   return (
     <div>
       <Header/>
