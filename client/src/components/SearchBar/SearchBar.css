@@ -1,0 +1,17 @@
+.search{
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    max-width: 680px;
+}
+.search-bar{
+    width: 100%;
+    border-radius:3.8rem;
+    padding: .5rem 2.0rem;
+}
+.search-button{
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
