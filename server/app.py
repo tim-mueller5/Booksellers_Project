@@ -16,23 +16,23 @@ class Books(Resource):
         books = [book.to_dict() for book in Book.query.all()]
         return make_response(books, 200)
 
-    def post(self, id):
+    def post(self):
         try:
             data = request.get_json()
             new_book = Book(
                 title = data['title'],
-                authors = data['title'],
-                description = data['title'],
-                edition = data['title'],
-                format = data['title'],
-                num_pages = data['title'],
-                rating = data['title'],
-                genres = data['title'],
-                image_url = data['title']
+                authors = data['authors'],
+                description = data['description'],
+                edition = data['edition'],
+                format = data['format'],
+                num_pages = data['num_pages'],
+                rating = data['rating'],
+                genres = data['genres'],
+                image_url = data['image_url']
             )
             db.session.add(new_book)
             db.session.commit()
-            return make_response(new_book, 201)
+            return make_response(new_book.to_dict(), 201)
         except ValueError as e:
             return make_response({"error": str(e)}, 400)
 
