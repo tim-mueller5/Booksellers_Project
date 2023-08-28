@@ -25,6 +25,15 @@ class Books(Resource):
 
 api.add_resource(Books, '/books')
 
+class BookById(Resource):
+    def get(self, id):
+        book = Book.query.filter_by(id=id).first()
+        if not book:
+            return make_response({"error": "book not found"}, 404)
+        return make_response(book.to_dict(), 200)
+    
+api.add_resource(BookById, '/books/<int:id>')
+
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
 
