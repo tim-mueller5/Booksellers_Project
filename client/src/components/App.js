@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Router, Routes, Route } from "react-router-dom";
 
 import Header from './Header/Header';
 import BookList from './Books/BookList';
@@ -37,11 +37,11 @@ function App() {
   return (
     <main className='App'>
         <Header />
-        <BrowserRouter>
-          <Routes>
-            <Route exact path="/" element={<BookList books={books}/>}/>
-          </Routes>
-        </BrowserRouter>
+        <Routes>
+          <Route exact path="/" element={<BookList books={books}/>}/>
+          <Route exact path="/login"/>
+          <Route exact path="/create"/>
+        </Routes>
     </main>
   )
 }
