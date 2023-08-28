@@ -66,6 +66,48 @@ class CartItemsByUserId(Resource):
     
 api.add_resource(CartItemsByUserId, '/cart_items/<int:user_id>')
 
+class Users(Resource):
+    def get(self):
+        users = [user.to_dict(rules=('-cart_items',)) for user in User.query.all()]
+        return make_response(users, 200)
+    
+    def post(self):
+        try:
+            new_user = User(
+                username = request.get_json()["username"]
+            )
+            db.session.add(new_user)
+            db.session.commit()
+            return make_response(new_user.to_dict(rules=('-cart_items',)), 201)
+        except ValueError as e:
+            return make_response({"error": str(e)}, 400)
+    
+api.add_resource(Users, '/users')
+
+class UserById(Resource):
+    def patch(self, id):
+        user = User.query.filter_by(id=id).first()
+        if not user:
+            return make_response({"error": "User not found"}, 404)
+        data = request.get_json()
+        for key in data:
+            setattr(user, key, data[key])
+        db.session.add(user)
+        db.session.commit()
+        return make_response(user.to_dict(rules=('-cart_items',)), 200)
+        
+
+    def delete(self, id):
+        user = User.query.filter_by(id=id).first()
+        if not user:
+            return make_response({"error": "User not found"}, 404)
+        db.session.delete(user)
+        db.session.commit()
+        return make_response({}, 204)
+
+api.add_resource(UserById, '/users/<int:id>')
+
+
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
 
