@@ -37,7 +37,6 @@ class Book(db.Model, SerializerMixin):
     num_pages = db.Column(db.Integer)
     rating = db.Column(db.Integer)
     genres = db.Column(db.String)
-    genre_list = db.Column(db.String)
     image_url = db.Column(db.String)
 
     cart_items = db.relationship('CartItem', backref='book', cascade='all, delete-orphan')
