@@ -40,29 +40,6 @@ function App() {
         <BookList books={books}/>
     </main>
   )
-
-import Header from "./Header";
-import AllBooks from "./AllBooks";
-
-function App() {
-  const [allBooks, setAllBooks] = useState([])
-
-  useEffect(() => {
-    fetch("/books")
-    .then(resp => resp.json())
-    .then(data => {
-       setAllBooks(data)
-       
-    })
-  }, [])
-
-  return (
-    <div>
-      <Header/>
-      <AllBooks allBooks={allBooks}/>
-    </div>
-  );
-
 }
 
 export default App;
