@@ -4,7 +4,7 @@
 from flask import request, make_response, jsonify
 from flask_restful import Resource
 from config import app, db, api
-from models import Book
+from models import Book, User, CartItem
 
 
 @app.route('/')
@@ -46,6 +46,25 @@ class BookById(Resource):
         return make_response(book.to_dict(), 200)
     
 api.add_resource(BookById, '/books/<int:id>')
+
+class CartItems(Resource):
+    def post(self):
+        new_cart_item = CartItem(
+            user_id = request.get_json()["user_id"],
+            book_id = request.get_json()["book_id"]
+        )
+        db.session.add(new_cart_item)
+        db.session.commit()
+        return make_response(new_cart_item.to_dict(rules=("-book","-user")), 201)
+
+api.add_resource(CartItems, '/cart_items')
+
+class CartItemsByUserId(Resource):
+    def get(self, user_id):
+        items = [item.to_dict(rules=("-book","-user")) for item in CartItem.query.filter_by(user_id=user_id).all()]
+        return make_response(items, 200)
+    
+api.add_resource(CartItemsByUserId, '/cart_items/<int:user_id>')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
