@@ -1,18 +1,11 @@
 #!/usr/bin/env python3
 
-# Standard library imports
 
-# Remote library imports
 from flask import request, make_response, jsonify
 from flask_restful import Resource
-
-# Local imports
 from config import app, db, api
-# Add your model imports
 from models import Book
 
-
-# Views go here!
 
 @app.route('/')
 def index():
@@ -22,6 +15,26 @@ class Books(Resource):
     def get(self):
         books = [book.to_dict() for book in Book.query.all()]
         return make_response(books, 200)
+
+    def post(self, id):
+        try:
+            data = request.get_json()
+            new_book = Book(
+                title = data['title'],
+                authors = data['title'],
+                description = data['title'],
+                edition = data['title'],
+                format = data['title'],
+                num_pages = data['title'],
+                rating = data['title'],
+                genres = data['title'],
+                image_url = data['title']
+            )
+            db.session.add(new_book)
+            db.session.commit()
+            return make_response(new_book, 201)
+        except ValueError as e:
+            return make_response({"error": str(e)}, 400)
 
 api.add_resource(Books, '/books')
 

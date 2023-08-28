@@ -39,7 +39,6 @@ if __name__ == '__main__':
                 num_pages = book['num_pages'],
                 rating = book['rating'],
                 genres = book['genres'],
-                genre_list = book['genre_list'],
                 image_url = book['image_url']
             )
             db.session.add(new_book)
