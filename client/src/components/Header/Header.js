@@ -2,6 +2,7 @@ import React from 'react';
 import SearchBar from '../SearchBar/SearchBar';
 import NavBar from '../NavBar/NavBar';
 import './Header.css';
+
 const Header = () =>{
     return(
         <header className='header'>
