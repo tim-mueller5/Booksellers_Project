@@ -23,7 +23,6 @@ class User(db.Model, SerializerMixin):
 
     @password_hash.setter
     def password_hash(self, password):
-        # utf-8 encoding and decoding is required in python 3
         password_hash = bcrypt.generate_password_hash(
             password.encode('utf-8'))
         self._password_hash = password_hash.decode('utf-8')
@@ -37,10 +36,15 @@ class User(db.Model, SerializerMixin):
         user = User.query.filter_by(username=username).first()
         if user:
             raise ValueError("Username already exists")
+        else:
+            return username
         
-    @property
-    def password_hash(self):
-        raise AttributeError('password is not a readable attribute')
+    # @property
+    # def _password_hash(self):
+    #     raise AttributeError('password is not a readable attribute')
+    
+    # def get_password_hash(self):
+    #     return self._password_hash
 
 
 class CartItem(db.Model, SerializerMixin):

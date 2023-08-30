@@ -34,7 +34,6 @@ function Login({ user, setUser }) {
 
     return (
         <div>
-            {(user != null) ? <h3>Current User: {user.username}</h3> : <h3>Login...</h3>}
             <h2>Login: </h2>
             <form onSubmit={formik.handleSubmit}>
                 <label htmlFor="username">New Username: </label>

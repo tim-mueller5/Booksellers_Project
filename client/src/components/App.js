@@ -51,7 +51,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<BookList books={books}/>}/>
           <Route exact path="/login" element={(user != null) ? <Logout user={user} setUser={setUser}/> :<Login user={user} setUser={setUser}/>}/>
-          <Route exact path="/create" element={<CreateNewUser/>}/>
+          <Route exact path="/create" element={<CreateNewUser user={user} setUser={setUser}/>}/>
         </Routes>
     </main>
   )

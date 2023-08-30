@@ -10,8 +10,8 @@ function Logout({ user, setUser }) {
 
     return (
         <div>
-            <h2>Logout:</h2>
-            <button onClick={handleClick}>Logout</button>
+            <h2>Logout?</h2>
+            <button onClick={handleClick}>-Confirm Logout-</button>
         </div>
     )
 }

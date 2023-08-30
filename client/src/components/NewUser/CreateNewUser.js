@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 
 
-function CreateNewUser() {
+function CreateNewUser({ user, setUser }) {
 
     const formSchema = yup.object().shape({
         username: yup.string().required("Must have username"),
@@ -12,7 +12,7 @@ function CreateNewUser() {
     const formik = useFormik({
         initialValues: {
             username: "",
-            password: ""
+            password: "",
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
@@ -25,6 +25,9 @@ function CreateNewUser() {
             }).then((resp) => {
                 if (resp.status === 201) {
                     console.log("User created")
+                    if (resp.ok) {
+                        resp.json().then((user) => setUser(user));
+                    }
                 }
             })
         }
