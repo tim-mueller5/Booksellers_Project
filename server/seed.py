@@ -46,7 +46,7 @@ if __name__ == '__main__':
 
 
         print('Creating User...')
-        user = User(username='Tim')
+        user = User(username='Tim', password_hash="123")
         db.session.add(user)
         db.session.commit()
 

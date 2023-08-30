@@ -2,10 +2,11 @@ import React from 'react';
 import SearchBar from '../SearchBar/SearchBar';
 import NavBar from '../NavBar/NavBar';
 import './Header.css';
-const Header = () =>{
+
+const Header = ({ user }) =>{
     return(
         <header className='header'>
-            <NavBar />
+            <NavBar user={user}/>
             <div className='header-content flex flex-c text-center text-white'>
                 <h2 className='header-title'> Uncover Your Next Book.</h2>
                 <br />
