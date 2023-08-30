@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 
 
-from flask import request, make_response, jsonify
+from flask import request, make_response, jsonify, session
 from flask_restful import Resource
 from config import app, db, api, bcrypt
 from models import Book, User, CartItem
+app.secret_key = b'\xf6\xd03L\x0fq%\xbat\xe0\x15r\x054\xbe\xcc'
 
 
 @app.route('/')
@@ -108,6 +109,34 @@ class UserById(Resource):
 
 api.add_resource(UserById, '/users/<int:id>')
 
+class CheckSession(Resource):
+    def get(self):
+        user = User.query.filter(User.id == session.get('user_id')).first()
+        if user:
+            return user.to_dict(rules=('-cart_items',))
+        else:
+            return {'message': '401: Not Authorized'}, 401
+
+api.add_resource(CheckSession, '/check_session')
+
+class Login(Resource):
+    def post(self):
+        user = User.query.filter(User.username == request.get_json()['username']).first()
+        user_pass = User.authenticate(user, request.get_json()['password'])
+        if user_pass:
+            session['user_id'] = user.id
+            return user.to_dict(rules=('-cart_items',))
+        else:
+            return {"error": "User not found"}
+    
+api.add_resource(Login, '/login')
+
+class Logout(Resource):
+    def delete(self):
+        session['user_id'] = None
+        return {'message': '204: No Content'}, 204
+
+api.add_resource(Logout, '/logout')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

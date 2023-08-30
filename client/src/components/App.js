@@ -10,6 +10,7 @@ import './App.css';
 function App() {
 
   const [books, setBooks] = useState([])
+  const [user, setUser] = useState(null)
 
   useEffect(() => {
     fetch('https://example-data.draftbit.com/books?_limit=200')
@@ -33,6 +34,14 @@ function App() {
       .catch(error => {
           console.error('Error fetching data:', error);
       });
+  }, []);
+
+  useEffect(() => {
+    fetch("/check_session").then((response) => {
+      if (response.ok) {
+        response.json().then((user) => setUser(user));
+      }
+    });
   }, []);
   
   return (

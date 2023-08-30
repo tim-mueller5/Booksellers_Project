@@ -1,6 +1,7 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.orm import validates
 
 from config import db, bcrypt
 
@@ -14,6 +15,7 @@ class User(db.Model, SerializerMixin):
     cart_items = db.relationship('CartItem', backref='user', cascade='all, delete-orphan')
 
     serialize_rules = ('-cart_items.user',)
+    serialize_only = ('id', 'username')
 
     @hybrid_property
     def password_hash(self):
@@ -29,6 +31,16 @@ class User(db.Model, SerializerMixin):
     def authenticate(self, password):
         return bcrypt.check_password_hash(
             self._password_hash, password.encode('utf-8'))
+    
+    @validates('username')
+    def validate_username(self, key, username):
+        user = User.query.filter_by(username=username).first()
+        if user:
+            raise ValueError("Username already exists")
+        
+    @property
+    def password_hash(self):
+        raise AttributeError('password is not a readable attribute')
 
 
 class CartItem(db.Model, SerializerMixin):
