@@ -11,12 +11,12 @@
     
 }
 .login:hover{
-    color: #014bb3;
+    color: #006aff;
 }
 .new-user{
     display: flex;
     border-left: 25px solid white;
 }
 .new-user:hover{
-    color: #014bb3;
+    color: #006aff;
 }
