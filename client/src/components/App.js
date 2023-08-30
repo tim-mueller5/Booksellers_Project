@@ -2,14 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import Header from './Header/Header';
-import BookList from './Books/BookList';
 import CreateNewUser from "./NewUser/CreateNewUser";
 import Login from "./Login/Login";
 import Logout from "./Logout/Logout";
-import './App.css';
+import BookDetails from './Books/BookDetails';
+import FilterButtons from './BookFilters/FilterButtons';
+
 
 function App() {
 
+  const [searchTerm, setSearchTerm] = useState('');
   const [books, setBooks] = useState([])
   const [user, setUser] = useState(null)
 
@@ -46,12 +48,13 @@ function App() {
   }, []);
   
   return (
-    <main className='App'>
-        <Header user={user}/>
+    <main>
+        <Header user={user} searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
         <Routes>
-          <Route exact path="/" element={<BookList books={books}/>}/>
+          <Route exact path='/' element={<FilterButtons setSearchTerm={setSearchTerm} searchTerm={searchTerm}/>} />
           <Route exact path="/login" element={(user != null) ? <Logout user={user} setUser={setUser}/> :<Login user={user} setUser={setUser}/>}/>
           <Route exact path="/create" element={<CreateNewUser user={user} setUser={setUser}/>}/>
+          <Route exact path='/book/:id' element={<BookDetails />} />
         </Routes>
     </main>
   )
