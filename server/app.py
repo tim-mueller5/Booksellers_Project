@@ -3,7 +3,7 @@
 
 from flask import request, make_response, jsonify
 from flask_restful import Resource
-from config import app, db, api
+from config import app, db, api, bcrypt
 from models import Book, User, CartItem
 
 
@@ -74,7 +74,8 @@ class Users(Resource):
     def post(self):
         try:
             new_user = User(
-                username = request.get_json()["username"]
+                username = request.get_json()["username"],
+                password_hash = request.get_json()["password"]
             )
             db.session.add(new_user)
             db.session.commit()
