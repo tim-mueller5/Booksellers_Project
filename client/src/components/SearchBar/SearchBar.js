@@ -1,13 +1,15 @@
-import React from 'react';
+import React from "react";
 import './SearchBar.css';
 
-const SearchBar = () => {
+const SearchBar = ({searchTerm, setSearchTerm}) => {
     return(
         <div className='search'>
-            <input className = 'search-bar' type='text' placeholder="Search Title"/>
-            <button className='search-button flex-c'><i className="fa-solid fa-magnifying-glass fa-xl" style={{color: '#014bb3'}} type='submit'></i></button>
+            <input className = 'search-bar' type='text' placeholder="Search"
+                value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
+            <button className='search-button flex-c'>
+                <i className="fa-solid fa-magnifying-glass fa-xl"></i>
+            </button>
         </div>
     )
 }
-
 export default SearchBar
