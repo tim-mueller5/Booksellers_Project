@@ -3,6 +3,7 @@ import { Router, Routes, Route } from "react-router-dom";
 
 import Header from './Header/Header';
 import BookList from './Books/BookList';
+import CreateNewUser from "./NewUser/CreateNewUser";
 import './App.css';
 
 function App() {
@@ -39,7 +40,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<BookList books={books}/>}/>
           <Route exact path="/login"/>
-          <Route exact path="/create"/>
+          <Route exact path="/create" element={<CreateNewUser/>}/>
         </Routes>
     </main>
   )
