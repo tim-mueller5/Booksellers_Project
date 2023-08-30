@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import { useParams, useNavigate} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import './BookDetails.css';
 
 const BookDetails = () => {
@@ -13,17 +13,7 @@ const BookDetails = () => {
         .then(data => setBook(data))       
         .catch(error => {console.error('Error fetching data:', error);});
     }, [id]);
-    // useEffect(() => {
-    //     async function getBookDetails(){
-    //         try{
-    //             const response = await fetch (`https://example-data.draftbit.com/books/${id}`);
-    //             const data = await response.json();
-    //             setBook(data);
-                
-    //         }catch(error) {console.log(error)}
-    //     }
-    //     getBookDetails()
-    // }, [id]);
+
     return (
     <div className='book-details'>
     <div className='container'>
@@ -58,7 +48,7 @@ const BookDetails = () => {
                     <span className='text-italic'>{book?.genres}</span>
                 </div>
                 <button className='cart'>
-                    <i class="fa-solid fa-cart-shopping fa-2xl"></i>
+                    <i className="fa-solid fa-cart-shopping fa-2xl"></i>
                 </button>
             </div>
         </div>
@@ -66,5 +56,4 @@ const BookDetails = () => {
     </div>
     )
 }
-
 export default BookDetails

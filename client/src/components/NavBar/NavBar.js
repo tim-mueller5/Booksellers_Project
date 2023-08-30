@@ -1,10 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './NavBar.css';
 
 const NavBar = () => {
-    // const [toggleLogin, setToggleLogin] = useState(false);
-    // const handleLogin = () => setToggleLogin(!toggleLogin);
-
     return(
         <div className='nav-bar'>
             <span style={{ marginRight: '10px' }}><i className="fa-solid fa-book fa-2xl" style={{color: '#70a7ff'}}></i> </span>
@@ -14,5 +11,4 @@ const NavBar = () => {
         </div>
     )
 }
-
 export default NavBar

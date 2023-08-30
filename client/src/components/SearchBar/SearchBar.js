@@ -1,24 +1,15 @@
-import React, { createContext, useContext, useState } from "react";
+import React from "react";
 import './SearchBar.css';
 
-// const GlobalContext = createContext();
-
-const SearchBar = () => {
-    const [input, setInput] = useState('');
-    
-    function handleSubmit(value){
-        setInput(value)
-    }
-
+const SearchBar = ({searchTerm, setSearchTerm}) => {
     return(
         <div className='search'>
             <input className = 'search-bar' type='text' placeholder="Search"
-                value={input} onChange={(e) => handleSubmit(e.target.value)}/>
-            <button className='search-button flex-c' onClick={() => handleSubmit(input)}>
+                value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
+            <button className='search-button flex-c'>
                 <i className="fa-solid fa-magnifying-glass fa-xl"></i>
             </button>
         </div>
     )
 }
-
 export default SearchBar

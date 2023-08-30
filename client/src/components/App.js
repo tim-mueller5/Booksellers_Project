@@ -1,28 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
+
 import Header from './Header/Header';
-import NavBar from './NavBar/NavBar';
-import BookList from './Books/BookList';
 import BookDetails from './Books/BookDetails';
-import FilterBooks from './FilterBooks';
-import FilterButtons from './FilterButtons';
-import BookCard from './Books/BookCard';
-import './App.css';
-import { GlobalProvider } from './SearchBar/SearchBar'
+import FilterButtons from './BookFilters/FilterButtons';
 
 function App() {
-
+  const [searchTerm, setSearchTerm] = useState('');
+  
   return (
-    // <GlobalProvider>
-    <main className='App'>
-      <Header />
-      <Routes>
-        <Route path='/' element={<FilterButtons />} />
-        <Route path='/book/:id' element={<BookDetails />} />
-      </Routes> 
+    <main>
+    <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
+    <Routes>
+      <Route path='/' element={<FilterButtons setSearchTerm={setSearchTerm} searchTerm={searchTerm}/>} />
+      <Route path='/book/:id' element={<BookDetails />} />
+    </Routes> 
     </main>
-    // </GlobalProvider>
   )
 }
-
 export default App;

@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import React from "react";
+import { useNavigate } from 'react-router-dom';
 import './BookList.css'
-import BookDetails from './BookDetails'
 
 function BookCard ({ book }){
-
     const navigate = useNavigate();
 
     return(
@@ -33,5 +31,4 @@ function BookCard ({ book }){
         </div>
     )
 }
-
 export default BookCard

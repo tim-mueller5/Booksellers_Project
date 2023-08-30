@@ -3,7 +3,7 @@ import SearchBar from '../SearchBar/SearchBar';
 import NavBar from '../NavBar/NavBar';
 import './Header.css';
 
-const Header = () =>{
+const Header = ({searchTerm, setSearchTerm}) => {
     return(
         <header className='header'>
             <NavBar />
@@ -14,10 +14,9 @@ const Header = () =>{
                 Divulge in a world of knowledge and imagination, where you can explore a diverse collection of books, 
                 uncover hidden literary gems, and embark on a journey through pages
                 </p>
-                <SearchBar />
+                <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
             </div>
         </header>
     )
 }
-
 export default Header
