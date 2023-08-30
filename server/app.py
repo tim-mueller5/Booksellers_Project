@@ -113,9 +113,9 @@ class CheckSession(Resource):
     def get(self):
         user = User.query.filter(User.id == session.get('user_id')).first()
         if user:
-            return user.to_dict(rules=('-cart_items',))
+            return make_response(user.to_dict(rules=('-cart_items',)), 200)
         else:
-            return {'message': '401: Not Authorized'}, 401
+            return make_response({'message': '401: Not Authorized'}, 401)
 
 api.add_resource(CheckSession, '/check_session')
 
@@ -123,18 +123,18 @@ class Login(Resource):
     def post(self):
         user = User.query.filter(User.username == request.get_json()['username']).first()
         user_pass = User.authenticate(user, request.get_json()['password'])
-        if user_pass:
+        if user_pass == True:
             session['user_id'] = user.id
-            return user.to_dict(rules=('-cart_items',))
+            return make_response(user.to_dict(rules=('-cart_items',)), 200)
         else:
-            return {"error": "User not found"}
+            return make_response({"error": "User not found"}, 400)
     
 api.add_resource(Login, '/login')
 
 class Logout(Resource):
     def delete(self):
         session['user_id'] = None
-        return {'message': '204: No Content'}, 204
+        return make_response({'message': '204: No Content'}, 204)
 
 api.add_resource(Logout, '/logout')
 

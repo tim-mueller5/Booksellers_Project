@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import Header from './Header/Header';
 import BookList from './Books/BookList';
 import CreateNewUser from "./NewUser/CreateNewUser";
 import Login from "./Login/Login";
+import Logout from "./Logout/Logout";
 import './App.css';
 
 function App() {
@@ -46,10 +47,10 @@ function App() {
   
   return (
     <main className='App'>
-        <Header />
+        <Header user={user}/>
         <Routes>
           <Route exact path="/" element={<BookList books={books}/>}/>
-          <Route exact path="/login" element={<Login/>}/>
+          <Route exact path="/login" element={(user != null) ? <Logout user={user} setUser={setUser}/> :<Login user={user} setUser={setUser}/>}/>
           <Route exact path="/create" element={<CreateNewUser/>}/>
         </Routes>
     </main>
