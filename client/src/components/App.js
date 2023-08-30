@@ -8,11 +8,12 @@ import FilterBooks from './FilterBooks';
 import FilterButtons from './FilterButtons';
 import BookCard from './Books/BookCard';
 import './App.css';
-
+import { GlobalProvider } from './SearchBar/SearchBar'
 
 function App() {
 
   return (
+    // <GlobalProvider>
     <main className='App'>
       <Header />
       <Routes>
@@ -20,6 +21,7 @@ function App() {
         <Route path='/book/:id' element={<BookDetails />} />
       </Routes> 
     </main>
+    // </GlobalProvider>
   )
 }
 

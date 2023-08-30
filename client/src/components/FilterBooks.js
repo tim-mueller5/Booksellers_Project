@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import BookCard from './Books/BookCard'
 import BookList from './Books/BookList'
-
+import { useGlobalContext } from './SearchBar/SearchBar'
 
 function FilterBooks({ filter }){
 
