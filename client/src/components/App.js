@@ -15,29 +15,29 @@ function App() {
   const [books, setBooks] = useState([])
   const [user, setUser] = useState(null)
 
-  // useEffect(() => {
-  //   fetch('https://example-data.draftbit.com/books?_limit=200')
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       const specificBooksData = data.map(item => {
-  //         return {
-  //           id: item.id,
-  //           title: item.title,
-  //           authors: item.authors,
-  //           description: item.description,
-  //           num_pages: item.num_pages,
-  //           rating: item.rating,
-  //           rating_count: item.rating_count,
-  //           genres: item.genres,
-  //           image_url: item.image_url,
-  //         };
-  //       })
-  //     setBooks(specificBooksData);
-  //     })
-  //     .catch(error => {
-  //         console.error('Error fetching data:', error);
-  //     });
-  // }, []);
+  useEffect(() => {
+    fetch('https://example-data.draftbit.com/books')
+      .then(response => response.json())
+      .then(data => {
+        const specificBooksData = data.map(item => {
+          return {
+            id: item.id,
+            title: item.title,
+            authors: item.authors,
+            description: item.description,
+            num_pages: item.num_pages,
+            rating: item.rating,
+            rating_count: item.rating_count,
+            genres: item.genres,
+            image_url: item.image_url,
+          };
+        })
+      setBooks(specificBooksData);
+      })
+      .catch(error => {
+          console.error('Error fetching data:', error);
+      });
+  }, []);
 
   useEffect(() => {
     fetch("/check_session").then((response) => {

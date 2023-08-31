@@ -39,7 +39,7 @@ class Books(Resource):
 
 api.add_resource(Books, '/books')
 
-class BooksBySearchTerm(Resource):
+class BooksByFilter(Resource):
     def get(self, search_term):
         search_term = search_term.lower()
         books = [book.to_dict() for book in Book.query.all()]
@@ -61,7 +61,7 @@ class BooksBySearchTerm(Resource):
 
         return make_response(filtered_books, 200)
     
-api.add_resource(BooksBySearchTerm, '/books/<search_term>')
+api.add_resource(BooksByFilter, '/books/<search_term>')
 
 class BookById(Resource):
     def get(self, id):
