@@ -14,7 +14,7 @@ def index():
 
 class Books(Resource):
     def get(self):
-        books = [book.to_dict() for book in Book.query.all()]
+        books = [book.to_dict(rules=('-cart_items',)) for book in Book.query.all()]
         return make_response(books, 200)
 
     def post(self):
@@ -44,7 +44,18 @@ class BookById(Resource):
         book = Book.query.filter_by(id=id).first()
         if not book:
             return make_response({"error": "book not found"}, 404)
-        return make_response(book.to_dict(), 200)
+        return make_response(book.to_dict(rules=('-cart_items',)), 200)
+    
+    def patch(self, id):
+        book = Book.query.filter_by(id=id).first()
+        if not book:
+            return make_response({"error": "book not found"}, 404)
+        data = request.get_json()
+        for key in data:
+            setattr(book, key, data[key])
+        db.session.add(book)
+        db.session.commit()
+        return make_response(book.to_dict(rules=('-cart_items',)), 200)
     
 api.add_resource(BookById, '/books/<int:id>')
 
