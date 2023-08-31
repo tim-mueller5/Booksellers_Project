@@ -1,23 +1,15 @@
-# Phase 4 Full-Stack Application Project 
+# Phase 4 Full-Stack Application Project - Bookseller
 
 ## Introduction
-
+This app was created by Ralph Shui and Timothy Mueller
 
 ## Setup
 
 ### `server/`
 
-The `server/` directory contains all of your backend code.
+The `server/` directory contains all of the backend code.
 
-`app.py` is your Flask application. You'll want to use Flask to build a simple
-API backend like we have in previous modules. You should use Flask-RESTful for
-your routes. You should be familiar with `models.py` and `seed.py` by now, but
-remember that you will need to use Flask-SQLAlchemy, Flask-Migrate, and
-SQLAlchemy-Serializer instead of SQLAlchemy and Alembic in your models.
-
-The project contains a default `Pipfile` with some basic dependencies. You may
-adapt the `Pipfile` if there are additional dependencies you want to add for
-your project.
+`app.py` is your Flask application. 
 
 To download the dependencies for the backend server, run:
 
@@ -39,10 +31,8 @@ should see a web page with the heading "Phase 4 Project Server".
 ### `client/`
 
 The `client/` directory contains all of your frontend code. The file
-`package.json` has been configured with common React application dependencies,
-include `react-router-dom`. The file also sets the `proxy` field to forward
-requests to `"http://localhost:5555". Feel free to change this to another port-
-just remember to configure your Flask app to use another port as well!
+`package.json` has been configured with the `proxy` field to forward
+requests to `"http://localhost:5555".
 
 To download the dependencies for the frontend client, run:
 

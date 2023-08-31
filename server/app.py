@@ -3,7 +3,7 @@
 
 from flask import request, make_response, jsonify, session
 from flask_restful import Resource
-from config import app, db, api, bcrypt
+from config import app, db, api
 from models import Book, User, CartItem
 app.secret_key = b'\xf6\xd03L\x0fq%\xbat\xe0\x15r\x054\xbe\xcc'
 
@@ -14,7 +14,7 @@ def index():
 
 class Books(Resource):
     def get(self):
-        books = [book.to_dict() for book in Book.query.all()]
+        books = [book.to_dict(rules=('-cart_items',)) for book in Book.query.all()]
         return make_response(books, 200)
 
     def post(self):
@@ -39,12 +39,47 @@ class Books(Resource):
 
 api.add_resource(Books, '/books')
 
+class BooksByFilter(Resource):
+    def get(self, search_term):
+        search_term = search_term.lower()
+        books = [book.to_dict() for book in Book.query.all()]
+        filtered_books = []
+
+        if search_term == 'featured':
+            for book in books:
+                if book["rating"] > 4.4:
+                    filtered_books.append(book)
+                    filtered_books = sorted(filtered_books, key=lambda x:x['rating'], reverse=True)
+        elif search_term == 'title':
+            filtered_books = sorted(books, key=lambda x:x['title'])
+        elif search_term == 'authors':
+            filtered_books = sorted(books, key=lambda x:x['authors'])
+        else:
+            for book in books:
+                if search_term in book["genres"].lower():
+                    filtered_books.append(book)
+
+        return make_response(filtered_books, 200)
+    
+api.add_resource(BooksByFilter, '/books/<search_term>')
+
 class BookById(Resource):
     def get(self, id):
         book = Book.query.filter_by(id=id).first()
         if not book:
             return make_response({"error": "book not found"}, 404)
-        return make_response(book.to_dict(), 200)
+        return make_response(book.to_dict(rules=('-cart_items',)), 200)
+    
+    def patch(self, id):
+        book = Book.query.filter_by(id=id).first()
+        if not book:
+            return make_response({"error": "book not found"}, 404)
+        data = request.get_json()
+        for key in data:
+            setattr(book, key, data[key])
+        db.session.add(book)
+        db.session.commit()
+        return make_response(book.to_dict(rules=('-cart_items',)), 200)
     
 api.add_resource(BookById, '/books/<int:id>')
 
@@ -66,6 +101,17 @@ class CartItemsByUserId(Resource):
         return make_response(items, 200)
     
 api.add_resource(CartItemsByUserId, '/cart_items/<int:user_id>')
+
+class CartItemByItemId(Resource):
+    def delete(self, id):
+        cart_item = CartItem.query.filter_by(id=id).first()
+        if not cart_item:
+            return make_response({"error": "Item not found"}, 404)
+        db.session.delete(cart_item)
+        db.session.commit()
+        return make_response({}, 204)
+
+api.add_resource(CartItemByItemId, '/cart_items/<int:id>')
 
 class Users(Resource):
     def get(self):
@@ -93,7 +139,11 @@ class UserById(Resource):
             return make_response({"error": "User not found"}, 404)
         data = request.get_json()
         for key in data:
-            setattr(user, key, data[key])
+            if key == "password":
+                key = "password_hash"
+                setattr(user, key, data["password"])
+            else:
+                setattr(user, key, data[key])
         db.session.add(user)
         db.session.commit()
         return make_response(user.to_dict(rules=('-cart_items',)), 200)
@@ -122,12 +172,15 @@ api.add_resource(CheckSession, '/check_session')
 class Login(Resource):
     def post(self):
         user = User.query.filter(User.username == request.get_json()['username']).first()
-        user_pass = User.authenticate(user, request.get_json()['password'])
+        if user:
+            user_pass = User.authenticate(user, request.get_json()['password'])
+        else:
+            return make_response({"error": "User not found"}, 400)
         if user_pass == True:
             session['user_id'] = user.id
             return make_response(user.to_dict(rules=('-cart_items',)), 200)
         else:
-            return make_response({"error": "User not found"}, 400)
+            return make_response({"error": "Username or password incorrect"}, 400)
     
 api.add_resource(Login, '/login')
 
