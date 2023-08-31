@@ -39,6 +39,30 @@ class Books(Resource):
 
 api.add_resource(Books, '/books')
 
+class BooksBySearchTerm(Resource):
+    def get(self, search_term):
+        search_term = search_term.lower()
+        books = [book.to_dict() for book in Book.query.all()]
+        filtered_books = []
+
+        if search_term == 'featured':
+            for book in books:
+                if book["rating"] > 4.4:
+                    filtered_books.append(book)
+                    filtered_books = sorted(filtered_books, key=lambda x:x['rating'], reverse=True)
+        elif search_term == 'title':
+            filtered_books = sorted(books, key=lambda x:x['title'])
+        elif search_term == 'authors':
+            filtered_books = sorted(books, key=lambda x:x['authors'])
+        else:
+            for book in books:
+                if search_term in book["genres"].lower():
+                    filtered_books.append(book)
+
+        return make_response(filtered_books, 200)
+    
+api.add_resource(BooksBySearchTerm, '/books/<search_term>')
+
 class BookById(Resource):
     def get(self, id):
         book = Book.query.filter_by(id=id).first()
