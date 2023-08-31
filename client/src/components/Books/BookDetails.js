@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './BookDetails.css';
 
-const BookDetails = () => {
+const BookDetails = ({ user }) => {
     const navigate = useNavigate();
     const {id} = useParams();
     const [book, setBook] = useState({})
@@ -48,7 +48,7 @@ const BookDetails = () => {
                     <span className='text-italic'>{book?.genres}</span>
                 </div>
                 <button className='cart'>
-                    <i className="fa-solid fa-cart-shopping fa-2xl"></i>
+                    <i className={(user != null) ? "fa-solid fa-cart-shopping fa-2xl" : null}></i>
                 </button>
             </div>
         </div>

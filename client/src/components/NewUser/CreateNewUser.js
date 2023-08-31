@@ -1,8 +1,11 @@
 import { useFormik } from "formik";
+import { useNavigate } from 'react-router-dom';
 import * as yup from "yup";
 
 
 function CreateNewUser({ user, setUser }) {
+    
+    const navigate = useNavigate();
 
     const formSchema = yup.object().shape({
         username: yup.string().required("Must have username"),
@@ -29,21 +32,27 @@ function CreateNewUser({ user, setUser }) {
                         resp.json().then((user) => setUser(user));
                     }
                 }
-            })
+            }).then(navigate(`/`))
         }
     })
-
-
     return (
         <div>
-            <h2>Create New User: </h2>
-            <form onSubmit={formik.handleSubmit}>
-                <label htmlFor="username">New Username: </label>
-                <input id="username" name="username" onChange={formik.handleChange} value={formik.values.username} />
-                <label htmlFor="password">New Password: </label>
-                <input id="password" name="password" onChange={formik.handleChange} value={formik.values.password}/>
-                <button  type="submit">Submit</button>
-            </form>
+            <div className='flex-c text-center'>
+                <h2>Create New User:</h2>
+                <form onSubmit={formik.handleSubmit}>
+                    <label htmlFor="username">New Username: </label>
+                    <input id="username" name="username" onChange={formik.handleChange} 
+                        value={formik.values.username} 
+                        style={{background: '#70a7ff'}}/>
+                    <p style={{ color: "red" }}> {formik.errors.username}</p>
+                    <label htmlFor="password">New Password:&nbsp;&nbsp;</label>
+                    <input id="password" name="password" onChange={formik.handleChange}
+                        value={formik.values.password}
+                        style={{background: '#70a7ff'}}/>
+                    <p style={{ color: "red" }}> {formik.errors.password}</p>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
         </div>
     )
 }

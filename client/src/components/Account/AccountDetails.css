@@ -1,0 +1,21 @@
+span{
+    font-size: 16px;
+}
+h3{
+    text-decoration: underline; 
+}
+.btn-save{
+    padding: .05rem .4rem;
+    border-radius:1rem;
+    background-color: rgb(58, 58, 188);
+    color: white;
+}
+.btn-logout{
+    padding: .05rem .4rem;
+    border-radius:1rem;
+    background-color: rgb(207, 69, 207);
+    color: white;
+}
+.account-details{
+    margin-left: 2rem;  
+}

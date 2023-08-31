@@ -18,7 +18,7 @@ function FilterButtons({ setSearchTerm, searchTerm }){
     setFilter(e.target.value);
     setButtonClicked(index === buttonClicked ? null : index);
   }
-
+  
   return(
       <div className='filter-buttons flex-c text-center'>
           {filterButtons}
