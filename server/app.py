@@ -3,7 +3,7 @@
 
 from flask import request, make_response, jsonify, session
 from flask_restful import Resource
-from config import app, db, api, bcrypt
+from config import app, db, api
 from models import Book, User, CartItem
 app.secret_key = b'\xf6\xd03L\x0fq%\xbat\xe0\x15r\x054\xbe\xcc'
 
