@@ -115,7 +115,11 @@ class UserById(Resource):
             return make_response({"error": "User not found"}, 404)
         data = request.get_json()
         for key in data:
-            setattr(user, key, data[key])
+            if key == "password":
+                key = "password_hash"
+                setattr(user, key, data["password"])
+            else:
+                setattr(user, key, data[key])
         db.session.add(user)
         db.session.commit()
         return make_response(user.to_dict(rules=('-cart_items',)), 200)
