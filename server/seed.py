@@ -24,7 +24,7 @@ if __name__ == '__main__':
         CartItem.query.delete()
 
         print("Fetching books...")
-        res = requests.get('https://example-data.draftbit.com/books?_limit=200')
+        res = requests.get('https://example-data.draftbit.com/books')
         response = json.loads(res.text)
 
 
