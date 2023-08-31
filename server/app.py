@@ -67,6 +67,12 @@ class CartItemsByUserId(Resource):
     
 api.add_resource(CartItemsByUserId, '/cart_items/<int:user_id>')
 
+class CartItemByItemId(Resource):
+    def delete(self, id):
+        pass
+
+api.add_resource(CartItemByItemId, '/cart_items/<int:id>')
+
 class Users(Resource):
     def get(self):
         users = [user.to_dict(rules=('-cart_items',)) for user in User.query.all()]
@@ -122,12 +128,15 @@ api.add_resource(CheckSession, '/check_session')
 class Login(Resource):
     def post(self):
         user = User.query.filter(User.username == request.get_json()['username']).first()
-        user_pass = User.authenticate(user, request.get_json()['password'])
+        if user:
+            user_pass = User.authenticate(user, request.get_json()['password'])
+        else:
+            return make_response({"error": "User not found"}, 400)
         if user_pass == True:
             session['user_id'] = user.id
             return make_response(user.to_dict(rules=('-cart_items',)), 200)
         else:
-            return make_response({"error": "User not found"}, 400)
+            return make_response({"error": "Username or password incorrect"}, 400)
     
 api.add_resource(Login, '/login')
 
