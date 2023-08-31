@@ -69,7 +69,12 @@ api.add_resource(CartItemsByUserId, '/cart_items/<int:user_id>')
 
 class CartItemByItemId(Resource):
     def delete(self, id):
-        pass
+        cart_item = CartItem.query.filter_by(id=id).first()
+        if not cart_item:
+            return make_response({"error": "Item not found"}, 404)
+        db.session.delete(cart_item)
+        db.session.commit()
+        return make_response({}, 204)
 
 api.add_resource(CartItemByItemId, '/cart_items/<int:id>')
 
