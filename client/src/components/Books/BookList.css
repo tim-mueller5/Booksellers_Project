@@ -37,7 +37,7 @@
 }
 .book-card-rating{
     opacity: 0.6;
-    color:blue;
+    color:blue; 
     font-style: italic;
     font-size: 14px;
 }

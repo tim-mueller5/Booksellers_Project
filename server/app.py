@@ -97,7 +97,7 @@ api.add_resource(CartItems, '/cart_items')
 
 class CartItemsByUserId(Resource):
     def get(self, user_id):
-        items = [item.to_dict(rules=("-book","-user")) for item in CartItem.query.filter_by(user_id=user_id).all()]
+        items = [item.book.to_dict() for item in CartItem.query.filter_by(user_id=user_id).all()]
         return make_response(items, 200)
     
 api.add_resource(CartItemsByUserId, '/cart_items/<int:user_id>')
@@ -139,11 +139,13 @@ class UserById(Resource):
             return make_response({"error": "User not found"}, 404)
         data = request.get_json()
         for key in data:
-            if key == "password":
-                key = "password_hash"
-                setattr(user, key, data["password"])
-            else:
-                setattr(user, key, data[key])
+            if data[key] != '':
+                if key == "password":
+                    key = "password_hash"
+                    setattr(user, key, data["password"])
+                else:
+                    setattr(user, key, data[key])
+
         db.session.add(user)
         db.session.commit()
         return make_response(user.to_dict(rules=('-cart_items',)), 200)

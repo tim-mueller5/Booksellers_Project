@@ -14,6 +14,22 @@ const BookDetails = ({ user }) => {
         .catch(error => {console.error('Error fetching data:', error);});
     }, [id]);
 
+    const handleAddToCart = () =>{
+        fetch(`/cart_items`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                "user_id": user.id,
+                "book_id": book.id,
+            }),
+        })
+        .then(response => response.json())
+        .then(data=>console.log(data))       
+        .catch(error => {console.error('Error fetching data:', error);});
+    }
+    
     return (
     <div className='book-details'>
     <div className='container'>
@@ -47,7 +63,7 @@ const BookDetails = ({ user }) => {
                     <span className='fw-6'>Genres: </span>
                     <span className='text-italic'>{book?.genres}</span>
                 </div>
-                <button className='cart'>
+                <button className='cart' onClick={handleAddToCart}>
                     <i className={(user != null) ? "fa-solid fa-cart-shopping fa-2xl" : null}></i>
                 </button>
             </div>

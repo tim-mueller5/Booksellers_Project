@@ -32,7 +32,7 @@ function Login({ user, setUser }) {
             }).then(navigate(`/`))
         }
     })
-
+    
     return (
         <div>
             <div className='flex-c text-center'>

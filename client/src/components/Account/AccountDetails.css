@@ -3,6 +3,13 @@ span{
 }
 h3{
     text-decoration: underline; 
+    font-size: 25px;
+}
+.new-username{
+    margin-left: 125px;
+}
+.new-password{
+    margin-left: 125px;
 }
 .btn-save{
     padding: .05rem .4rem;
@@ -10,12 +17,73 @@ h3{
     background-color: rgb(58, 58, 188);
     color: white;
 }
-.btn-logout{
+.btn-red{
     padding: .05rem .4rem;
     border-radius:1rem;
-    background-color: rgb(207, 69, 207);
+    background-color: rgb(255, 0, 0);
     color: white;
 }
-.account-details{
-    margin-left: 2rem;  
+.delete-button{
+    position: relative;
+    right: 75px;
+}
+.cart-container{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+.cart-list, .book-details{
+    padding: 3rem 0;
+    background-color:white;
+}
+.cart-list-content{
+    gap: 3rem;
+}
+.cart-card{
+    padding: 3rem 2rem;
+    border-radius: 1px;
+    background-color: var(--white-color);
+    box-shadow: rgba(0,0,0,0.5) 0px 5px 15px 0px;
+    transition: var(--transition)
+}
+.cart-card:hover{
+    box-shadow: rgba(0, 34, 255, .5) 0px 5px 15px 0px;
+}
+.cart-card-img{
+    max-width: 180px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.cart-card-info{
+    margin-top: 2rem;
+}
+.cart-card-title{
+    line-height: 1.4;
+    margin-bottom: 0.8rem;
+}
+.cart-card-author{
+    line-height: 1.4;
+    margin-bottom: 4px;
+}
+
+@media screen and (min-width: 600px){
+    .cart-list-content{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media screen and (min-width: 992px){
+    .cart-list-content{
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .book-card-img img{
+        max-width: 150px;
+    }
+}
+@media screen and (min-width: 992px){
+    .cart-list-content{
+        grid-template-columns: repeat(5, 1fr);
+    }
+    .cart-card-img img{
+        max-width: 120px;
+    }
 }
