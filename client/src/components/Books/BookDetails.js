@@ -25,8 +25,8 @@ const BookDetails = ({ user }) => {
                 "book_id": book.id,
             }),
         })
-        .then(response => response.json())
-        .then(data=>console.log(data))       
+        .then(response => console.log(response.json()))
+        .then(navigate(`/login`))       
         .catch(error => {console.error('Error fetching data:', error);});
     }
     

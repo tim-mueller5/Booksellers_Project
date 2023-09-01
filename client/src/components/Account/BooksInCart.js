@@ -1,24 +1,20 @@
 import React from "react";
-import { useNavigate } from 'react-router-dom';
 import './AccountDetails.css';
 
-function BooksInCart ({ book }){
-    const navigate = useNavigate();
+function BooksInCart ({ book, itemId}){
 
-    // const handleDelete = () => {
-    //     fetch(`/cart_items/${book.cart_items.user_id.id}`, {
-    //         method: "DELETE",
-    //     }).then(() => setUser(null) )
-    //     .then(navigate(`/login`))
-    // }r
-    console.log(book.cart_items.user_id)
-    console.log(book)
+    const handleDelete = () => {
+        fetch(`/cart_items/${itemId}`, {
+            method: "DELETE",
+        }).then (()=> window.location.reload(true))
+    }
+
     return(    
         <div className='cart-card flex flex-c flex-column flex-sb'>
         <div className='cart-card-img'>
             <button className='delete-button'
-                onClick={()=> navigate(`/`)}>
-            <i class="fa-solid fa-xmark fa-lg"></i>
+                onClick={handleDelete}>
+            <i className="fa-solid fa-xmark fa-lg"></i>
         </button>
             <img value={book.id} src ={book.image_url} alt='cover'/>
         </div>

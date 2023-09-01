@@ -65,6 +65,7 @@ class Book(db.Model, SerializerMixin):
     title = db.Column(db.String)
     authors = db.Column(db.String)
     description = db.Column(db.String)
+    review_count = db.Column(db.Integer)
     edition = db.Column(db.String)
     format = db.Column(db.String)
     num_pages = db.Column(db.Integer)

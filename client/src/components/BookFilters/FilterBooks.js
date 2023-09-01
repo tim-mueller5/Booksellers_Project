@@ -4,7 +4,7 @@ import BookList from '../Books/BookList'
 function FilterBooks({ filter, searchTerm, setSearchTerm }){
 
   const [books, setBooks] = useState([])
-  const [api_Url, set_Api_Url] = useState('https://example-data.draftbit.com/books?_sort=review_count&_order=desc&_limit=15');
+  const [api_Url, set_Api_Url] = useState('/books');
 
   useEffect(() => {
     if (searchTerm !== ""){
@@ -15,28 +15,28 @@ function FilterBooks({ filter, searchTerm, setSearchTerm }){
   useEffect(() => {
     if (filter === 'Featured'){
       setSearchTerm('');
-      set_Api_Url('https://example-data.draftbit.com/books?_sort=rating&_order=desc&_limit=50');
+      set_Api_Url('/books/featured');
     }else if (filter === "Title"){
       setSearchTerm('');
-      set_Api_Url('https://example-data.draftbit.com/books?_sort=title&_order=asc');
+      set_Api_Url('/books/title');
     }else if (filter === 'Author'){
       setSearchTerm('');
-      set_Api_Url('https://example-data.draftbit.com/books?_sort=authors&_order=asc');
+      set_Api_Url('/books/authors');
     }else if (filter === 'Fantasy'){
       setSearchTerm('');
-      set_Api_Url('https://example-data.draftbit.com/books?q=fantasy');
+      set_Api_Url('/books/fantasy');
     }else if (filter === 'Fiction'){
       setSearchTerm('');
-      set_Api_Url('https://example-data.draftbit.com/books?q=fiction');
+      set_Api_Url('/books/fiction');
     }else if (filter === 'Classics'){
       setSearchTerm('');
-      set_Api_Url('https://example-data.draftbit.com/books?q=classics');  
+      set_Api_Url('/books/classics');  
     }else if (filter === 'Romance'){
       setSearchTerm('');
-      set_Api_Url('https://example-data.draftbit.com/books?q=romance'); 
+      set_Api_Url('/books/romance'); 
     }else if (filter === 'Non-fiction'){
       setSearchTerm('');
-      set_Api_Url('https://example-data.draftbit.com/books?q=nonfiction');
+      set_Api_Url('/books/nonfiction');
     }
   }, [filter]);
 

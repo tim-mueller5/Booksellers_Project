@@ -14,9 +14,11 @@ def index():
 
 class Books(Resource):
     def get(self):
+        filtered_books = []
         books = [book.to_dict(rules=('-cart_items',)) for book in Book.query.all()]
-        return make_response(books, 200)
-
+        filtered_books = sorted(books, key=lambda x:x['review_count'], reverse=True)
+        return make_response(filtered_books[:15], 200)
+    
     def post(self):
         try:
             data = request.get_json()
@@ -97,7 +99,7 @@ api.add_resource(CartItems, '/cart_items')
 
 class CartItemsByUserId(Resource):
     def get(self, user_id):
-        items = [item.book.to_dict() for item in CartItem.query.filter_by(user_id=user_id).all()]
+        items = [item.to_dict() for item in CartItem.query.filter_by(user_id=user_id).all()]
         return make_response(items, 200)
     
 api.add_resource(CartItemsByUserId, '/cart_items/<int:user_id>')

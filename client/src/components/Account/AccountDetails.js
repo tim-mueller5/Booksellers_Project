@@ -35,10 +35,19 @@ function AccountDetails({ user, setUser }) {
                   }
             }).then(navigate(`/`))
             alert("Account Details Changed")
-            console.log(values)
         }
     })
 
+    const handleDelete = () =>{
+        fetch(`/users/${user.id}`, {
+            method: "DELETE",
+        }).then(() => {
+            setUser(null);
+            (navigate(`/`));
+            alert("Account Deleted");
+        })
+    }
+    
     const handleLogOut = () => {
         fetch("/logout", {
             method: "DELETE",
@@ -53,9 +62,9 @@ function AccountDetails({ user, setUser }) {
         .catch(error => {console.error('Error fetching data:', error)});
         
     }, []);
-    
-    const displayCartItems = cartItems.map((book, index) =>  {
-        return(<BooksInCart key={index} book={book} />)})
+    console.log(cartItems)
+    const displayCartItems = cartItems.map((item, index) =>  {
+        return(<BooksInCart key={index} book={item.book} itemId={item.id} />)})
 
     return (
         <div>   
@@ -65,7 +74,8 @@ function AccountDetails({ user, setUser }) {
                     <h3>Username Information</h3>
                         <span className='text-italic'>Current Username:&nbsp;&nbsp;{user.username}</span>
                         <br />
-                        <button className='btn-red' type="submit">Delete User</button>
+                        <button className='btn-red' onClick={handleDelete}
+                            >Delete User</button>
                         <br />
                         <span className='new-username'>New Username: </span>
                         <input name="username" value={formik.values.username}
@@ -81,8 +91,8 @@ function AccountDetails({ user, setUser }) {
                             style={{color: '#70a7ff'}} />
                         <p style={{ color: "red" }}> {formik.errors.password}</p>
                         <button className='btn-save' type="submit">Save</button>
-
-                    <h3>In Cart:</h3>
+                </form>    
+                <h3>In Cart:</h3>
                         <div className='cart-list'>
                             <div className='cart-container'>
                                 <div className='cart-list-content grid'>
@@ -91,7 +101,6 @@ function AccountDetails({ user, setUser }) {
                             </div>
                         </div>
                     <button className='btn-red' onClick={handleLogOut}>Logout</button>
-                </form>    
             </div>
         </div>
     )
