@@ -10,6 +10,7 @@ function FilterBooks({ filter, searchTerm, setSearchTerm }){
     if (searchTerm !== ""){
       set_Api_Url(`https://example-data.draftbit.com/books?q=${searchTerm}`)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm]);
 
   useEffect(() => {
@@ -38,6 +39,7 @@ function FilterBooks({ filter, searchTerm, setSearchTerm }){
       setSearchTerm('');
       set_Api_Url('/books/nonfiction');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter]);
 
   useEffect(() => {
@@ -47,6 +49,7 @@ function FilterBooks({ filter, searchTerm, setSearchTerm }){
     .catch(error => {
         console.error('Error fetching data:', error);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [api_Url]);
 
   return(

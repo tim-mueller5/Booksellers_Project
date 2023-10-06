@@ -60,7 +60,7 @@ function AccountDetails({ user, setUser }) {
         .then(response => response.json())
         .then(data => {setCartItems(data)})
         .catch(error => {console.error('Error fetching data:', error)});
-        
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     console.log(cartItems)
     const displayCartItems = cartItems.map((item, index) =>  {
